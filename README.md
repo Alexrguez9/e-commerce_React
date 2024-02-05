@@ -4,3 +4,6 @@
 # RUN
 npm run dev
 
+# DATA
+A small React project that is working in Vite for faster development.
+
