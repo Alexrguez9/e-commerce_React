@@ -1,0 +1,190 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 100%;
+    height: 5rem;
+    background-color: #242424;
+    color: #ffffff;
+}
+header h1{
+    font-size: 2.5em;
+    margin: 0;
+}
+
+a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+header > * {
+    padding: 1rem; /* Ajusta el valor según tus preferencias */
+}
+
+#nav-links > *{
+    margin: 1rem;
+}
+#search-bar{
+    width: 30%;
+}
+#search-bar.mobile-search-bar{
+    margin-top: 1rem;
+    width: 100%;
+}
+#search-bar > input{
+    width: 100%;
+    background-color: #ffffff;
+    caret-color: black;
+    color: black;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 1.5rem;
+}
+#search-bar > *:hover, #search-bar > *:focus{
+    background-color: #f0f0f0;
+}
+
+#nav-icons{
+    display: flex;
+    align-items: center;
+}
+#nav-icons > *{
+    font-size: 1.5rem;
+    margin: 1rem;
+}
+#nav-icons.mobile-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Ajusta el valor según tus preferencias */
+}
+
+/* ... otros estilos ... */
+
+#menu-toggle {
+    display: none; /* Oculta el botón del menú en pantallas grandes */
+    cursor: pointer;
+    flex-direction: column;
+    padding: 10px;
+    width: 2em;
+    height: 2em;
+}
+
+#menu-container {
+    display: none; /* Oculta el menú en pantallas grandes */
+    flex-direction: column;
+    background-color: #242424;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px;
+    flex-direction: column;
+    background-color: #242424;
+}
+
+#menu-container a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+#menu-container.open {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#nav-links {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 1024px) {
+    #menu-toggle {
+        display: flex; /* Muestra el botón del menú en pantallas pequeñas */
+    }
+
+    #nav-links {
+        display: none; /* Oculta el menú de navegación en pantallas pequeñas */
+    }
+
+    #nav-icons{
+        display: none; /* Oculta los iconos de navegación en pantallas pequeñas */
+    }
+
+    #header-logo h1{
+        font-size: 2.0em;
+    }
+}
+@media (max-width: 768px) {
+    #menu-toggle {
+        display: flex; /* Muestra el botón del menú en pantallas pequeñas */
+    }
+
+    #nav-links {
+        display: none; /* Oculta el menú de navegación en pantallas pequeñas */
+    }
+    
+    #search-bar.mobile-search-bar{
+        display: none;
+    }
+
+    #nav-icons{
+        display: none; /* Oculta los iconos de navegación en pantallas pequeñas */
+    }
+
+    #header-logo h1{
+        font-size: 2.0em;
+    }
+}
+
+@media (max-width: 426px) {
+    #menu-toggle {
+        display: flex; /* Muestra el botón del menú en pantallas pequeñas */
+    }
+
+    #nav-links {
+        display: none; /* Oculta el menú de navegación en pantallas pequeñas */
+    }
+
+    #nav-icons {
+        display: none; /* Oculta los iconos de navegación en pantallas pequeñas */
+    }
+
+    #header-logo h1{
+        font-size: 1.5em;
+    }
+}
+
+#close-menu {
+    cursor: pointer;
+    font-size: 2rem;
+    color: #ffffff;
+    align-self: flex-end;
+}
+
+#close-menu span {
+    display: inline-block;
+    transform: rotate(45deg);
+}
+
+#close-menu span:before, #close-menu span:after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 20px;
+    background-color: #ffffff;
+    position: absolute;
+}
+
+#close-menu span:before {
+    transform: rotate(-90deg);
+}
+
+#close-menu span:after {
+    transform: rotate(90deg);
+}
