@@ -1,9 +1,9 @@
 # e-commerce_React
  Here is my first e-commerce shop developed with React.js
 
-# RUN
+# Run
 npm run dev
 
-# DATA
+# Data
 A small React project that is working in Vite for faster development.
 
