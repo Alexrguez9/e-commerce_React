@@ -2,7 +2,7 @@ import './CardProduct.css';
 import PropTypes from 'prop-types';
 import '../../data.json';
 
-const CardProduct = ({ product }) => {
+const CardProduct = ({ product, onClickAddToCart }) => {
     
     // product como prop y pasamos product.name, product.price y product.image
     return (
@@ -14,6 +14,9 @@ const CardProduct = ({ product }) => {
             </div>
             <div className='price'>
                 <p>{product.price}{'€'}</p>
+            </div>
+            <div>
+                <button className='btn-add-to-cart' onClick={onClickAddToCart}>Add to cart</button>
             </div>
         </div>
     );

@@ -15,11 +15,6 @@ header h1{
     margin: 0;
 }
 
-a{
-    color: #ffffff;
-    text-decoration: none;
-}
-
 header > * {
     padding: 1rem; /* Ajusta el valor según tus preferencias */
 }
@@ -188,3 +183,14 @@ header > * {
 #close-menu span:after {
     transform: rotate(90deg);
 }
+
+.item-count {
+    position: relative;
+    top: -16px;
+    right: 31px;
+    background-color: #23c8f5;
+    color: white;
+    border-radius: 40%;
+    padding: 1px 5px;
+    font-size: 12px!important;
+  }
