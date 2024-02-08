@@ -24,6 +24,8 @@ header > * {
 }
 #search-bar{
     width: 30%;
+    border: 1px solid black;
+    border-radius: 15px;
 }
 #search-bar.mobile-search-bar{
     margin-top: 1rem;
