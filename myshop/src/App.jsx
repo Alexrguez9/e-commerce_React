@@ -7,6 +7,7 @@ import ListProductsSearch from './components/ListProductsSearch.jsx';
 import Cart from './components/Cart.jsx';
 import Profile from './components/Profile.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
+import { UserProvider } from './context/UserContext.jsx';
 
 function App() {
   const [searchText, setSearchText] = useState('');
@@ -30,16 +31,18 @@ function App() {
   }; 
 
   return (
+
     <ThemeProvider>
-
-      <Header onSearchInputChange={setSearchText} onClickInicio={handleClickInicio} onClickCart={handleClickCart} onClickProfile={handleClickProfile} cartItems={cartItems}/>
-      {activeComponent === 'listProducts' && <div><Discount /><ListProductsSearch searchText={searchText} onClickAddToCart={handleAddToCart} /></div>}
-      {activeComponent === 'cart' && <Cart />}
-      {activeComponent === 'profile' && <Profile />}
-
-      <Footer />
-
+      <UserProvider>
+        <Header onSearchInputChange={setSearchText} onClickInicio={handleClickInicio} onClickCart={handleClickCart} onClickProfile={handleClickProfile} cartItems={cartItems}/>
+        {activeComponent === 'listProducts' && <div><Discount /><ListProductsSearch searchText={searchText} onClickAddToCart={handleAddToCart} /></div>}
+        {activeComponent === 'cart' && <Cart />}
+       {/*  {activeComponent === 'profile' && <Profile />} */}
+        <Profile></Profile>
+        <Footer />
+      </UserProvider>
     </ThemeProvider>
+
   )
 }
 

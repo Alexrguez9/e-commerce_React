@@ -1,11 +1,18 @@
+import { useContext } from 'react';
+import { useUser } from "../context/UserContext";
 import './Discount.css';
 
+
 const Discount = () => {
-    const discount = 20;
+    const { user } = useUser();
+    
+
 
     return (
         <div className="discount-block">
-            <p>¡{discount}% de descuento para nuevos clientes!</p>
+            {user ? 
+                <p>¡{user.name} aprovéchate de tu 20 % de descuento!</p> 
+                : <p>crea una cuenta para disfrutar de nuestros descuentos</p>}
         </div>
     );
 }

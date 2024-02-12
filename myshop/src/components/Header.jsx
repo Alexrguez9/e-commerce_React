@@ -21,7 +21,7 @@ const Header = ({onSearchInputChange, onClickInicio, onClickCart, onClickProfile
 
      // destructuring from ThemeContext
     const { theme, toggleTheme } = useContext(ThemeContext);
-    console.log(theme, toggleTheme);
+
 
     const styles = {
         backgroundColor: theme === 'light' ? 'white' : 'black',

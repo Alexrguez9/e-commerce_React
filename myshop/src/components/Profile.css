@@ -1,0 +1,35 @@
+main {
+    display: flex;
+    place-content: center;
+}
+
+.content {
+    margin: 3rem;
+    background-color: #ccc;
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    max-width: 1000px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: row;
+    place-content: center;
+    margin: 2rem;
+}
+.inputs > * {
+    margin: 1rem;
+}
+
+input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .inputs {
+        flex-direction: column;
+    }
+}
