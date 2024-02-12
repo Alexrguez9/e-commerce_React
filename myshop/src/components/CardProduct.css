@@ -62,3 +62,7 @@
 .btn-add-to-cart:hover {
     background-color: #1d9dbf;
 }
+
+.card-product .rating {
+    color: #23c8f5;
+}

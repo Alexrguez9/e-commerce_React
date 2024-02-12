@@ -7,9 +7,11 @@ import { IoMdClose } from "react-icons/io";
 import { IoMdMenu } from "react-icons/io";
 import { VscColorMode } from "react-icons/vsc";
 import { ThemeContext } from '../context/ThemeContext';
+import { CartContext } from '../context/CartContext';
 
 const Header = ({onSearchInputChange, onClickInicio, onClickCart, onClickProfile, cartItems}) => {
     const [isMenuOpen, setMenuOpen] = useState(false);
+    const { totalItems } = useContext(CartContext);
 
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
@@ -52,7 +54,7 @@ const Header = ({onSearchInputChange, onClickInicio, onClickCart, onClickProfile
                     <IoPersonOutline onClick={onClickProfile}/>
                     <VscColorMode onClick={toggleTheme}/>
                     <MdOutlineShoppingCart onClick={onClickCart}/>
-                    {cartItems >= 0 && <span className="item-count">{cartItems}</span>}
+                    {cartItems >= 0 && <span className="item-count">{totalItems}</span>}
                 </div>
             </div>
 
@@ -72,7 +74,7 @@ const Header = ({onSearchInputChange, onClickInicio, onClickCart, onClickProfile
                 <IoPersonOutline onClick={onClickProfile}/>
                 <VscColorMode onClick={toggleTheme}/>
                 <MdOutlineShoppingCart onClick={onClickCart}/>
-                {cartItems >= 0 && <span className="item-count">{cartItems}</span>}
+                {cartItems >= 0 && <span className="item-count">{totalItems}</span>}
             </div>
 
             <IoMdMenu  id="menu-toggle" onClick={toggleMenu}/>

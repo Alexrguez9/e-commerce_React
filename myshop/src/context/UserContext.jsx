@@ -1,8 +1,9 @@
-// UserContext.js
 import React, { createContext, useState, useContext } from "react";
 
+// Creamos contexto
 const UserContext = createContext();
 
+// Creamos provider
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('userData')) || null);
 
