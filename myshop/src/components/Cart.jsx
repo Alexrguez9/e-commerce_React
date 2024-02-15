@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 import './Cart.css'; 
+import Discount from './Discount';
 
 const Cart = () => {
   const { cart } = useContext(CartContext);
@@ -8,6 +9,7 @@ const Cart = () => {
   if (cart.length === 0) {
     return (
       <div>
+        <Discount />
         <h2>Carrito de Compras</h2>
         <p>El carrito está vacío.</p>
       </div>
@@ -32,6 +34,7 @@ const Cart = () => {
 
   return (
     <div>
+      <Discount />
       <h2>Carrito de Compras</h2>
       <ul className="cart-list">
         {Object.values(products).map((item) => (

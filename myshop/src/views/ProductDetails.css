@@ -1,0 +1,34 @@
+.product-details {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    margin: 1.5rem;
+    align-items: center;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    
+}
+
+.product-details > * {
+    margin: 1rem;
+}
+.image {
+    width: 25%;
+    height: 25%;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.price {
+    color: #23c8f5;
+    font-size: 1.5rem;
+}
+
+.category {
+    color: grey;
+    font-weight: bold;
+}
+
+.back-button {
+    margin: 1.5rem;
+}
