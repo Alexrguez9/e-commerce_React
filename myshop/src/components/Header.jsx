@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoPersonOutline  } from "react-icons/io5";
@@ -8,20 +9,24 @@ import { IoMdMenu } from "react-icons/io";
 import { VscColorMode } from "react-icons/vsc";
 import { ThemeContext } from '../context/ThemeContext';
 import { CartContext } from '../context/CartContext';
+import { useSearch } from '../context/SearchContext';
 
-const Header = ({onSearchInputChange, onClickInicio, onClickCart, onClickProfile, cartItems}) => {
+
+const Header = () => {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const { totalItems } = useContext(CartContext);
+    const { searchText, toggleText } = useSearch();
 
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
     };
-
-    const inputHandler = (e) => {
-        onSearchInputChange(e.target.value);
+    // TODO: está bien? Falla algo del input (no muestra los productos con el nuevo texto)
+    const handleInputChange = (e) => {
+        console.log(e.target.value)
+        toggleText(e.target.value);
     };
-
-     // destructuring from ThemeContext
+    
+    // destructuring from ThemeContext
     const { theme, toggleTheme } = useContext(ThemeContext);
 
 
@@ -36,45 +41,44 @@ const Header = ({onSearchInputChange, onClickInicio, onClickCart, onClickProfile
     return (
         <header style={styles}>
             <div id="header-logo">
-                <h1 onClick={onClickInicio}>MiTienda</h1>
+                <Link to="/" >MiTienda</Link>
             </div>
 
             <div id="menu-container" className={isMenuOpen ? "open" : ""} style={styles}>
                 <IoMdClose id="close-menu" onClick={toggleMenu} style={linkStyles}/>
-                <a onClick={onClickInicio} style={linkStyles}>INICIO</a>
                 <a style={linkStyles}>CATEGORÍAS</a>
                 <a style={linkStyles}>OFERTAS</a>
                 <a style={linkStyles}>CONTACTO</a>
                 
-                <div id="search-bar" className={isMenuOpen ? "mobile-search-bar" : ""}>
-                    <input type="text" onChange={inputHandler} placeholder="Buscar..."/>
+                <div id="search-bar">
+                    <input type="text" value={searchText} placeholder="Buscar..." onChange={handleInputChange}/>
                 </div>
+                
                 <div id="nav-icons" className={isMenuOpen ? "mobile-icons" : ""}>
                     <FaRegHeart />
-                    <IoPersonOutline onClick={onClickProfile}/>
+                    <Link to="/login"><IoPersonOutline/></Link>
                     <VscColorMode onClick={toggleTheme}/>
-                    <MdOutlineShoppingCart onClick={onClickCart}/>
-                    {cartItems >= 0 && <span className="item-count">{totalItems}</span>}
+                    <Link to="/cart"> <MdOutlineShoppingCart/></Link>
+                    {totalItems >= 0 && <span className="item-count">{totalItems}</span>}
                 </div>
             </div>
 
             <div id="nav-links">
-                <a onClick={onClickInicio}>INICIO</a>
                 <a>CATEGORÍAS</a>
                 <a>OFERTAS</a>
                 <a>CONTACTO</a>
             </div>
 
             <div id="search-bar">
-                <input type="text" onChange={inputHandler} placeholder="Buscar..."/>
+                <input type="text" value={searchText} placeholder="Buscar..." onChange={handleInputChange}/>
             </div>
 
             <div id="nav-icons">
                 <FaRegHeart />
-                <IoPersonOutline onClick={onClickProfile}/>
+                <Link to="/login"><IoPersonOutline/></Link>
                 <VscColorMode onClick={toggleTheme}/>
-                <MdOutlineShoppingCart onClick={onClickCart}/>
-                {cartItems >= 0 && <span className="item-count">{totalItems}</span>}
+                <Link to="/cart"> <MdOutlineShoppingCart/></Link>
+                {totalItems >= 0 && <span className="item-count">{totalItems}</span>}
             </div>
 
             <IoMdMenu  id="menu-toggle" onClick={toggleMenu}/>
