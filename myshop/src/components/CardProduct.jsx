@@ -3,9 +3,11 @@ import './CardProduct.css';
 import PropTypes from 'prop-types';
 import { CartContext } from '../context/CartContext'
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const CardProduct = ({ product }) => {
     const { addToCart } = useContext(CartContext);
+    const { isAuthenticated } = useAuth();
     const handleAddToCart = () => {
         addToCart(product); 
     };
@@ -28,9 +30,11 @@ const CardProduct = ({ product }) => {
                     <p>{product.price}{'€'}</p>
                 </div>
             </Link>
-            <div>
-                <button className='btn-add-to-cart' onClick={handleAddToCart}>Add to cart</button>
-            </div>
+            {isAuthenticated && (
+                <div>
+                    <button className='btn-add-to-cart' onClick={handleAddToCart}>Add to cart</button>
+                </div>
+            )}
         </div>
     );
 }

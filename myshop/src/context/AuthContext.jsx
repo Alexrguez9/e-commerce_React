@@ -1,27 +1,30 @@
 import React, { createContext, useState, useContext } from "react";
 
 // Creamos contexto
-const UserContext = createContext();
+const AuthContext = createContext();
 
 // Creamos provider
-export const UserProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('userData')) || null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const login = (userData) => {
     localStorage.setItem('userData', JSON.stringify(userData));
     setUser(userData);
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
     localStorage.removeItem('userData');
+    setIsAuthenticated(false);
     setUser(null);
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
       {children}
-    </UserContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
-export const useUser = () => useContext(UserContext);
+export const useAuth = () => useContext(AuthContext);

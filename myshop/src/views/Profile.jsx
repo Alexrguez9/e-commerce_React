@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useUser } from "../context/UserContext";
+import { useAuth } from "../context/AuthContext";
 import './Profile.css';
 
 const Profile = () => {
-    const { user, login, logout } = useUser();
+    const { user, login, logout, isAuthenticated} = useAuth();
     const [formData, setFormData] = useState({ name: '', email: '' });
 
     const handleInputsChange = (e) => {

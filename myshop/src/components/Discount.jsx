@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import { useUser } from "../context/UserContext";
+import { useAuth } from "../context/AuthContext";
 import './Discount.css';
 
 
 const Discount = () => {
-    const { user } = useUser();
+    const { user } = useAuth();
     
 
 
