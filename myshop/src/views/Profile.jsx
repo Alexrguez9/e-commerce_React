@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import './Profile.css';
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Profile = () => {
-    const { user, login, logout, isAuthenticated} = useAuth();
+    const { user, login, logout} = useAuth();
     const [formData, setFormData] = useState({ name: '', email: '' });
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleInputsChange = (e) => {
         const { name, value } = e.target;
@@ -22,6 +26,7 @@ const Profile = () => {
 
         login(formData);
         setFormData({ name: '', email: '' });
+        navigate(location.state.pathname);
     }
 
     return (
