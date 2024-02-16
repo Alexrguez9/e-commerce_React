@@ -22,9 +22,14 @@ export const CartProvider = ({ children }) => {
     }
     setTotalItems(totalItems + 1);
   };
+
+  const resetCart = () => {
+    setCart([]);
+    setTotalItems(0);
+  };
   
   return (
-    <CartContext.Provider value={{ cart, addToCart, totalItems }}>
+    <CartContext.Provider value={{ cart, addToCart, totalItems, resetCart }}>
       {children}
     </CartContext.Provider>
   );

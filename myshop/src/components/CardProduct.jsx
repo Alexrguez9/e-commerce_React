@@ -20,7 +20,6 @@ const CardProduct = ({ product }) => {
                 <div>
                     <img src={product.image} alt={product.title} />
                     <h3 className='title'>{product.title}</h3>
-                    <p>{product.description}</p>
                 </div>
                 <div className="rating">
                     <p>Rating: {product.rating.rate} ({product.rating.count} reviews)</p>

@@ -11,7 +11,7 @@ const ProductDetails = () => {
     const { addToCart } = useContext(CartContext);
 
     const findProduct = data.find((product) => product.id === Number(productId));
-    const { title, price, description, image, category } = findProduct;
+    const { title, price, description, image, category, rating } = findProduct;
 
     const handleAddToCart = () => {
         addToCart(findProduct); 
@@ -28,10 +28,12 @@ const ProductDetails = () => {
                     <p>{description}</p>
                     <p className="price">Price: {price}€</p>
                     <p className="category">Category: {category}</p>
+                    <div className="rating">
+                        <p>Rating: ★{rating.rate} ({rating.count} reviews)</p>
+                    </div>
                     <button onClick={handleAddToCart}>Add to cart</button>
                 </div>
             </div>
-        <h1>Product Details id: {productId}</h1>
         </div>
     );
 }

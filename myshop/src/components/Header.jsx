@@ -59,7 +59,7 @@ const Header = () => {
                     <Link to="/login"><IoPersonOutline/></Link>
                     <VscColorMode onClick={toggleTheme}/>
                     <Link to="/cart"> <MdOutlineShoppingCart/></Link>
-                    {totalItems >= 0 && <span className="item-count">{totalItems}</span>}
+                    {totalItems > 0 && <span className="item-count">{totalItems}</span>}
                 </div>
             </div>
 
@@ -78,7 +78,7 @@ const Header = () => {
                 <Link to="/login"><IoPersonOutline/></Link>
                 <VscColorMode onClick={toggleTheme}/>
                 <Link to="/cart"> <MdOutlineShoppingCart/></Link>
-                {totalItems >= 0 && <span className="item-count">{totalItems}</span>}
+                {totalItems > 0 && <span className="item-count">{totalItems}</span>}
             </div>
 
             <IoMdMenu  id="menu-toggle" onClick={toggleMenu}/>
