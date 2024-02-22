@@ -2,6 +2,7 @@
  Here is my first e-commerce shop developed with React.js
 
 # Run
+cd .\myshop\
 npm run dev
 
 # Data
