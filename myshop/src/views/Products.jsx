@@ -10,13 +10,8 @@ const Products = () => {
   const { searchText } = useSearch();
 
   const filteredProducts = data.filter(product => {
-    if (searchText === '') {
-      console.log('VACIO')
-      return product;
-    }else{
-      console.log(product)
-      return product.title.toLowerCase().includes(searchText);
-    }
+    console.log(product)
+    return product.title.toLowerCase().includes(searchText);
   });
 
   return (
