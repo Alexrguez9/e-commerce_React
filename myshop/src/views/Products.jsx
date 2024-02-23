@@ -10,7 +10,6 @@ const Products = () => {
   const { searchText } = useSearch();
 
   const filteredProducts = data.filter(product => {
-    console.log(product)
     return product.title.toLowerCase().includes(searchText);
   });
 
