@@ -20,6 +20,11 @@
     width: 100%;
     height: 100%;
     justify-content: space-between;
+
+    .btn-new-product {
+        margin: 1rem;
+        background-color: #f42b2b;
+    }
 }
 
 .card-product img {
@@ -67,4 +72,32 @@
 
 .card-product .rating {
     color: #23c8f5;
+}
+
+.card-image-and-icons {
+    position: relative;
+}
+
+.admin-edit-delete-icons{
+    z-index: 1;
+}
+
+.admin-edit-product, .admin-delete-product {
+    position: absolute;
+    top: 0.5rem;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    color: #23c8f5;
+    z-index: 99;;
+}
+.admin-edit-product:hover, .admin-delete-product:hover {
+    color: #1d9dbf;
+    width: 40px;
+    height: 40px;
+}
+
+
+.admin-delete-product {
+    top: 2.5rem;
 }
