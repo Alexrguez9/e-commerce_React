@@ -68,3 +68,12 @@
     flex-direction: column;
 }
 
+
+.btn-new-product {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: red;
+
+
+}

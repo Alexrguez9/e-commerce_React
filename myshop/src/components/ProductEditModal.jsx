@@ -1,30 +1,44 @@
-// Modal for displaying the edit form for products (for admins)
 import './Modal.css'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { useProducts } from '../customHooks/useProducts';
 
-const Modal = ({ open, onClose, product }) => {
+const ProductEditModal = ({ product, closeModal }) => {
+    const [editedFields, setEditedFields] = useState({
+        title: product.title,
+        price: product.price,
+        description: product.description,
+        image: product.image
+    });
 
-    const {
-        handleInputChange,
-        handleSave,
-        form,
-    } = useProducts();
+    const { updateProduct } = useProducts();
+    
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        const newValue = name === 'price' ? parseFloat(value) : value;
+        setEditedFields((prevFields) => ({
+            ...prevFields,
+            [name]: newValue
+        }));
+    };
 
-
-    const handleSubmitForm = (e) => {
+    const handleSubmitForm = async (e) => {
         e.preventDefault();
-        handleSave();
-        console.log('Formulario enviado');
-        onClose();
-    }
 
+        const updatedProduct = {
+            ...product,
+            ...editedFields
+        };
+        await updateProduct(product.id, updatedProduct);
+        console.log('Updated product');
+        closeModal();
+    };
 
+    
     return (
-        <div className={`edit-product-admin-modal ${open ? 'open' : ''}`}>
+    <div className={'edit-product-admin-modal'}>
             <div className='modal-admin-content'>
-                <IoMdClose id="close-menu" onClick={onClose} style={{ color: 'black' }} />
+                <IoMdClose id="close-menu" onClick={closeModal} style={{ color: 'black' }} />
                 <h3 className="modal-admin-title">Modificar Producto</h3>
                 <form
                     onSubmit={handleSubmitForm}
@@ -35,7 +49,7 @@ const Modal = ({ open, onClose, product }) => {
                         type="text"
                         id="title"
                         name="title"
-                        value={form.title}
+                        value={editedFields.title}
                         onChange={handleInputChange}
                     />
                     <label htmlFor="price">Price</label>
@@ -43,7 +57,7 @@ const Modal = ({ open, onClose, product }) => {
                         type="text"
                         id="price"
                         name="price"
-                        value={form.price}
+                        value={editedFields.price}
                         onChange={handleInputChange}
                     />
                     <label htmlFor="description">Description</label>
@@ -51,7 +65,7 @@ const Modal = ({ open, onClose, product }) => {
                         type="text"
                         id="description"
                         name="description"
-                        value={form.description}
+                        value={editedFields.description}
                         onChange={handleInputChange}
                     />
                     <button type="submit">Guardar</button>
@@ -60,5 +74,4 @@ const Modal = ({ open, onClose, product }) => {
         </div>
     );
 }
-
-export default Modal;
+export default ProductEditModal;

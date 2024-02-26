@@ -32,7 +32,7 @@ export function ProductsProvider({ children }) {
             setTimeout(() => {
                 setLoading(false);
             }, 2000);
-        };
+        }
     };
 
     const getProductById = async (id) => {
@@ -54,6 +54,8 @@ export function ProductsProvider({ children }) {
         try {
             setLoading(true);
             await axios.delete(`${API_URL}/${id}`);
+            console.log("Product deleted", id);
+            console.log(products)
             // FORMA 2: suponemos que no hay nadie que está modificando la tabla también. 
                 // NO es buena opción para varios usuarios a la vez en la red realizando cambios 
             setProducts((prevProducts) => 
@@ -71,9 +73,10 @@ export function ProductsProvider({ children }) {
         try{
             setLoading(true);
             const response = await axios.post(API_URL, product);
-            setProducts((prevProducts) => [...prevProducts, response.data]);
+            const newProduct = response.data;
+            setProducts((prevProducts) => [...prevProducts, newProduct]);
         } catch (e){
-            console.error("Error adding product", error);
+            console.error("Error adding product", e);
         } finally {
             setLoading(false);
         }
@@ -82,12 +85,15 @@ export function ProductsProvider({ children }) {
     const updateProduct = async (id, editedProduct) => {
         try {
             setLoading(true);
-            const response = await axios.post(API_URL, product);
+            const response = await axios.put(`${API_URL}/${id}`, editedProduct);
             const updatedProduct = {
                 ...response.data,
                 updatedAt: new Date().toISOString(),
             }
-            setProducts((prevProducts) => [...prevProducts, response.data]);
+            setProducts((prevProducts) => 
+                prevProducts.map((product) =>
+                    product.id === id ? updatedProduct : product
+                ));
         } catch (error) {
             console.error("Error adding product", error);
         }
