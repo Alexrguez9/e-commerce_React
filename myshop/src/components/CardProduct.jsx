@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './CardProduct.css';
 import PropTypes from 'prop-types';
 import { CartContext } from '../context/CartContext'
@@ -7,44 +7,69 @@ import { useAuth } from '../context/AuthContext';
 import { LuPencil } from "react-icons/lu";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Modal from './Modal';
+import { useProducts } from '../customHooks/useProducts.js';
+
+const Loader = () => {
+    return <div className='spinner'>Cargando...</div>;
+};
 
 
-const CardProduct = ({ product, updateProduct }) => {
+const CardProduct = ({ product }) => {
     const { addToCart } = useContext(CartContext);
     const { isAuthenticated } = useAuth();
     const handleAddToCart = () => {
         addToCart(product); 
     };
     const {user} = useAuth();
-    const [showModal, setShowModal] = useState(false); // State for controlling the modal
-    const [isNewProduct, setIsNewProduct] = useState(false); // State for controlling the modal
+
+    const { 
+        products, 
+        editProduct,
+        deleteProduct,
+        createProcuct,
+        handleSave,
+        form,
+        setform,
+        loading,
+        error,
+        setError,
+        showModal,
+        setShowModal,
+    } = useProducts();
+
+    // useEffect solo se ejecuta cuando se ha modificado el estado de error
+    useEffect(() => {
+        if (error) {
+            alert(error);
+            setError(null);
+        }
+    }, [setError]);
+
+    if (loading) {
+        return <Loader />;
+    }
 
     const handleAdminEditProduct = () => {
-        console.log('Edit product');
-        setShowModal(true);
+        console.log('Edit product', product.id);
+        handleSave(product.id);
     }
 
     const handleAdminDeleteProduct = () => {
+        console.log(product);
         console.log('Delete product');
-        setShowModal(true);
+        deleteProduct(product.id);
     }
 
     const handleAdminNewProduct = () => {
         console.log('New product');
-        setIsNewProduct(true);
-        setShowModal(true);
-    }
-
-    const addNewProduct = (newProduct) => {
-        // Aquí deberías agregar la lógica para agregar el nuevo producto al array de productos
-        // Por ejemplo:
+        handleSave(null);
     }
     
     // product como prop y pasamos product.name, product.price...
     return (
         <div className="card-product">
             {showModal && (
-                <Modal product={product} updateProduct={updateProduct} open={showModal} isNewProduct={isNewProduct} addNewProduct={addNewProduct} onClose={() => setShowModal(false)}></Modal>
+                <Modal product={product} open={showModal} form={form} onClose={() => setShowModal(false)}></Modal>
             )}
             <div className='card-image-and-icons'>
                 <img src={product.image} alt={product.title} />
@@ -79,21 +104,6 @@ const CardProduct = ({ product, updateProduct }) => {
     );
 }
 
-CardProduct.propTypes = {
-    product: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        category: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        rating: PropTypes.shape({
-            rate: PropTypes.number.isRequired,
-            count: PropTypes.number.isRequired,
-          }).isRequired,
-    }).isRequired,
-    updateProduct: PropTypes.func.isRequired
-};
 
 
 export default CardProduct;
