@@ -53,14 +53,16 @@ export function ProductsProvider({ children }) {
     const deleteProduct = async (id) => {
         try {
             setLoading(true);
+            console.log(products)
             await axios.delete(`${API_URL}/${id}`);
             console.log("Product deleted", id);
-            console.log(products)
+            
             // FORMA 2: suponemos que no hay nadie que está modificando la tabla también. 
                 // NO es buena opción para varios usuarios a la vez en la red realizando cambios 
-            setProducts((prevProducts) => 
+            await setProducts((prevProducts) => 
                 prevProducts.filter((product) => product.id !== id)
             );
+            console.log(products)
             // FORMA 1: más lenta (+ peticiones a api), pero nos aseguramos de no perder datos entre peticiones de usuarios
             //getProducts();
         } catch (error) {

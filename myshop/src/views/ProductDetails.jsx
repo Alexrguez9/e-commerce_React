@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useContext }from "react";
 import { useParams, Link} from "react-router-dom";
 import Discount from "../components/Discount";
 import './ProductDetails.css';
-import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { ProductsContext } from "../context/ProductContext";
 
@@ -12,6 +11,7 @@ const ProductDetails = () => {
     const { products } = useContext(ProductsContext);
 
     const findProduct = products.find((product) => product.id === Number(productId));
+    console.log(findProduct);
     const { title, price, description, image, category, rating } = findProduct;
 
     const handleAddToCart = () => {

@@ -3,9 +3,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
 const Footer = () => {
-
     const { theme, toggleTheme } = useContext(ThemeContext);
-    console.log(theme, toggleTheme);
 
     const styles = {
         backgroundColor: theme === 'light' ? 'white' : 'black',
