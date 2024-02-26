@@ -7,10 +7,8 @@ import { useProducts } from '../customHooks/useProducts';
 
 const Products = () => {
   const { searchText } = useSearch();
-
-  const { 
-    products, 
-  } = useProducts();
+  const { products, loading, error } = useProducts();
+  
   
 
 

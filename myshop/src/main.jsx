@@ -8,6 +8,7 @@ import { ThemeProvider } from './context/ThemeContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { CartProvider } from './context/CartContext.jsx'
 import { SearchProvider } from './context/SearchContext.jsx'
+import { ProductsProvider } from './context/ProductContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <CartProvider>
               <AuthProvider>
                 <SearchProvider>
-                  <RouterProvider router={router} />
+                  <ProductsProvider>
+                    <RouterProvider router={router} />
+                  </ProductsProvider>
                 </SearchProvider>
               </AuthProvider>
             </CartProvider>
