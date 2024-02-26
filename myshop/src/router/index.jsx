@@ -12,12 +12,13 @@ export const router = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
+        errorElement: <NotFound />,
         children: [
             { path: '/', element: <Products /> },
             { path: '/product/:productId', element: <ProtectedRoute><ProductDetails /> </ProtectedRoute>},
             { path: '/cart', element: <ProtectedRoute><Cart /></ProtectedRoute> },
             { path: '/login', element: <Profile />},
-            { path: '/*', element: <NotFound />}
+            //{ path: '/*', element: <NotFound />}
         ]
     },
     

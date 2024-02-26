@@ -4,17 +4,24 @@ import './Profile.css';
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Profile = () => {
-    const { user, login, logout} = useAuth();
-    const [formData, setFormData] = useState({ name: '', email: '' });
+    const { user, login, logout } = useAuth();
+    const [formData, setFormData] = useState({ name: '', email: '', role:'' });
 
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleInputsChange = (e) => {
         const { name, value } = e.target;
+        console.log(value);
+        if (value.includes("@admin")){
+            formData.role = "admin";
+        } else {
+            formData.role = "user";
+        }
         setFormData(prevData => ({
             ...prevData,
-            [name]: value
+            [name]: value,
+            ['role']: formData.role,
         }));
     }
 
@@ -26,6 +33,7 @@ const Profile = () => {
 
         login(formData);
         setFormData({ name: '', email: '' });
+        console.log(location.state.pathname);
         navigate(location.state.pathname);
     }
 

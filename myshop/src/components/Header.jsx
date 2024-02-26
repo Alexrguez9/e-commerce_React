@@ -4,8 +4,7 @@ import './Header.css';
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoPersonOutline  } from "react-icons/io5";
 import { FaRegHeart  } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
-import { IoMdMenu } from "react-icons/io";
+import { IoMdClose, IoMdMenu } from "react-icons/io";
 import { VscColorMode } from "react-icons/vsc";
 import { ThemeContext } from '../context/ThemeContext';
 import { CartContext } from '../context/CartContext';
@@ -20,7 +19,7 @@ const Header = () => {
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
     };
-    // TODO: está bien? Falla algo del input (no muestra los productos con el nuevo texto)
+    
     const handleInputChange = (e) => {
         console.log(e.target.value)
         toggleText(e.target.value);
