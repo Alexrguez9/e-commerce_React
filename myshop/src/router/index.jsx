@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../views/Layout';
-import Products from '../views/Products';
+import ProductsSection from '../views/ProductsSection';
 import Cart from '../components/Cart';
 import Profile from '../views/Profile';
 import NotFound from '../views/NotFound';
@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
         element: <Layout />,
         errorElement: <NotFound />,
         children: [
-            { path: '/', element: <Products /> },
+            { path: '/', element: <ProductsSection /> },
             { path: '/product/:productId', element: <ProtectedRoute><ProductDetails /> </ProtectedRoute>},
             { path: '/cart', element: <ProtectedRoute><Cart /></ProtectedRoute> },
             { path: '/login', element: <Profile />},

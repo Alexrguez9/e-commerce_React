@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LuPencil } from "react-icons/lu";
 import { RiDeleteBinLine } from "react-icons/ri";
-import Modal from './Modal';
 import { useProducts } from '../customHooks/useProducts.js';
+import ProductEditModal from './ProductEditModal.jsx';
 
 const Loader = () => {
     return <div className='spinner'>Cargando...</div>;
@@ -15,6 +15,7 @@ const Loader = () => {
 
 
 const CardProduct = ({ product }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const { addToCart } = useContext(CartContext);
     const { isAuthenticated } = useAuth();
     const handleAddToCart = () => {
@@ -23,60 +24,29 @@ const CardProduct = ({ product }) => {
     const {user} = useAuth();
 
     const { 
-        products, 
-        editProduct,
-        deleteProduct,
-        createProcuct,
-        handleSave,
-        form,
-        setform,
-        loading,
-        error,
-        setError,
-        showModal,
-        setShowModal,
+        deleteProduct, loading
     } = useProducts();
-
-    // useEffect solo se ejecuta cuando se ha modificado el estado de error
-    useEffect(() => {
-        if (error) {
-            alert(error);
-            setError(null);
-        }
-    }, [setError]);
 
     if (loading) {
         return <Loader />;
     }
-
-    const handleAdminEditProduct = () => {
-        console.log('Edit product', product.id);
-        handleSave(product.id);
+    
+    const openModal = () => {
+        setIsModalOpen(true);
     }
-
-    const handleAdminDeleteProduct = () => {
-        console.log(product);
-        console.log('Delete product');
-        deleteProduct(product.id);
-    }
-
-    const handleAdminNewProduct = () => {
-        console.log('New product');
-        handleSave(null);
+    const closeModal = () => {
+        setIsModalOpen(false);
     }
     
     // product como prop y pasamos product.name, product.price...
     return (
         <div className="card-product">
-            {showModal && (
-                <Modal product={product} open={showModal} form={form} onClose={() => setShowModal(false)}></Modal>
-            )}
             <div className='card-image-and-icons'>
                 <img src={product.image} alt={product.title} />
                 {user?.role === 'admin' && (
                     <div className='admin-edit-delete-icons'>
-                        <LuPencil className='admin-edit-product' onClick={handleAdminEditProduct}/>
-                        <RiDeleteBinLine className='admin-delete-product' onClick={handleAdminDeleteProduct}/>
+                        <LuPencil className='admin-edit-product' onClick={openModal}/>
+                        <RiDeleteBinLine className='admin-delete-product' onClick={() => deleteProduct(product.id)}/>
                     </div>
                 )}
             </div>
@@ -97,9 +67,10 @@ const CardProduct = ({ product }) => {
                     <button className='btn-add-to-cart' onClick={handleAddToCart}>Add to cart</button>
                 </div>
             )}
-            {user?.role === 'admin' && (
-                <button className='btn-new-product' onClick={handleAdminNewProduct}>New product</button>
+            {isModalOpen && (
+                <ProductEditModal product={product} closeModal={closeModal} />
             )}
+            
         </div>
     );
 }

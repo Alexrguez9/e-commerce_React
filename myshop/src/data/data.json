@@ -239,6 +239,18 @@
         "rate": 3.6,
         "count": 145
       }
+    },
+    {
+      "id": "78a1",
+      "title": "fasdasd",
+      "price": 0,
+      "description": "fadsfasdf",
+      "category": "",
+      "image": "",
+      "rating": {
+        "rate": 0,
+        "count": 0
+      }
     }
   ]
 }

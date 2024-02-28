@@ -33,7 +33,6 @@ const Profile = () => {
 
         login(formData);
         setFormData({ name: '', email: '' });
-        console.log(location.state.pathname);
         navigate(location.state.pathname);
     }
 
