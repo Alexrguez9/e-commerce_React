@@ -1,12 +1,10 @@
 # e-commerce_React
- Here is my first e-commerce shop developed with React.js
+ A small React project that is working in Vite for faster development.
+ My first e-commerce shop developed with React.js
 
 # Run
 cd .\myshop\
 npm run dev
-
-# Data
-A small React project that is working in Vite for faster development.
 
 # LABS
  ## LAB 5: Redux - Redux Toolkit
