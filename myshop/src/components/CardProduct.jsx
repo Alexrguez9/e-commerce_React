@@ -6,8 +6,17 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LuPencil } from "react-icons/lu";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { useProducts } from '../customHooks/useProducts.js';
+// import { useProducts } from '../customHooks/useProducts.js';
+
 import ProductEditModal from './ProductEditModal.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+
+// import thunks and selectors from reducer for dispatch actions
+import {
+    getProductsError,
+    getProductsLoading,
+    deleteProductThunk,
+} from '../redux/reducers/productReducer';
 
 const Loader = () => {
     return <div className='spinner'>Cargando...</div>;
@@ -18,14 +27,25 @@ const CardProduct = ({ product }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { addToCart } = useContext(CartContext);
     const { isAuthenticated } = useAuth();
+
+    const dispatch = useDispatch();
+    const loading = useSelector(getProductsLoading);
+    const error = useSelector(getProductsError);
+
     const handleAddToCart = () => {
         addToCart(product); 
     };
     const {user} = useAuth();
-
+/* with PROVIDER
     const { 
         deleteProduct, loading
     } = useProducts();
+*/
+    const handleToggleDelete = async () => {
+        if (!loading){
+            dispatch(deleteProductThunk(product.id));
+        }
+    }
 
     if (loading) {
         return <Loader />;
@@ -46,7 +66,7 @@ const CardProduct = ({ product }) => {
                 {user?.role === 'admin' && (
                     <div className='admin-edit-delete-icons'>
                         <LuPencil className='admin-edit-product' onClick={openModal}/>
-                        <RiDeleteBinLine className='admin-delete-product' onClick={() => deleteProduct(product.id)}/>
+                        <RiDeleteBinLine className='admin-delete-product' onClick={handleToggleDelete}/>
                     </div>
                 )}
             </div>

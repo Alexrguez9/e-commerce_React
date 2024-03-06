@@ -1,7 +1,12 @@
 import './Modal.css'
 import React, { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
-import { useProducts } from '../customHooks/useProducts';
+// import { useProducts } from '../customHooks/useProducts';
+import { useDispatch } from 'react-redux';
+import {
+    updateProductThunk,
+    getAllProductsThunk,
+} from '../redux/reducers/productReducer';
 
 const ProductEditModal = ({ product, closeModal }) => {
     const [editedFields, setEditedFields] = useState({
@@ -11,7 +16,8 @@ const ProductEditModal = ({ product, closeModal }) => {
         image: product.image
     });
 
-    const { updateProduct } = useProducts();
+    // const { updateProduct } = useProducts();
+    const dispatch = useDispatch();
     
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -29,8 +35,11 @@ const ProductEditModal = ({ product, closeModal }) => {
             ...product,
             ...editedFields
         };
-        await updateProduct(product.id, updatedProduct);
+
+        dispatch(updateProductThunk(updatedProduct));
+        // await updateProduct(product.id, updatedProduct); // with PROVIDER
         console.log('Updated product');
+        dispatch(getAllProductsThunk());
         closeModal();
     };
 

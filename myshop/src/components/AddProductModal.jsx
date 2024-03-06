@@ -1,10 +1,16 @@
 import './Modal.css'
 import React, { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
+import { useDispatch } from 'react-redux';
+import {
+    addProductThunk,
+    getAllProductsThunk
+} from '../redux/reducers/productReducer';
 
-
-const AddProductModal = ({ addProduct, closeModal }) => {
+const AddProductModal = ({ /*addProduct,*/ closeModal }) => {
+    const dispatch = useDispatch();
     const [newProduct, setNewProduct] = useState({
+        id: (Math.floor(Math.random() * 1000) + 1).toString(),
         title: '',
         price: 0,
         description: '',
@@ -25,10 +31,12 @@ const AddProductModal = ({ addProduct, closeModal }) => {
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
-        addProduct(newProduct);
-        console.log('Formulario enviado');
+        // addProduct(newProduct); // with PROVIDER
+        dispatch(addProductThunk(newProduct));
         closeModal();
+        dispatch(getAllProductsThunk());
     };
+
     return (
     <div className={'edit-product-admin-modal'}>
             <div className='modal-admin-content'>
