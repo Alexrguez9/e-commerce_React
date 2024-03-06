@@ -5,7 +5,7 @@ import {
     addProductAPI,
     updateProductAPI,
     deleteProductAPI
-} from "../../api/products.js";
+} from "../../api/productsAPI.js";
 
 // Thunks
 export const getAllProductsThunk = createAsyncThunk(

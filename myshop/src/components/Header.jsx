@@ -21,7 +21,6 @@ const Header = () => {
     };
     
     const handleInputChange = (e) => {
-        console.log(e.target.value)
         toggleText(e.target.value);
     };
     

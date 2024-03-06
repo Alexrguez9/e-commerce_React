@@ -1,3 +1,4 @@
+/*
 import { useContext } from 'react';
 import { ProductsContext } from '../context/ProductContext';
 
@@ -7,3 +8,5 @@ export function useProducts() {
 
     return context;
 }
+
+*/

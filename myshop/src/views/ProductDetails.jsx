@@ -3,12 +3,17 @@ import { useParams, Link} from "react-router-dom";
 import Discount from "../components/Discount";
 import './ProductDetails.css';
 import { CartContext } from "../context/CartContext";
-import { ProductsContext } from "../context/ProductContext";
+// import { ProductsContext } from "../context/ProductContext";
+import { useSelector } from 'react-redux';
+import {
+    getAllProducts,
+} from '../redux/reducers/productReducer';
 
 const ProductDetails = () => {
     const {productId} = useParams();
     const { addToCart } = useContext(CartContext);
-    const { products } = useContext(ProductsContext);
+    // const { products } = useContext(ProductsContext); // with PROVIDER
+    const products = useSelector(getAllProducts);
 
     const findProduct = products.find((product) => product.id === Number(productId));
     console.log(findProduct);

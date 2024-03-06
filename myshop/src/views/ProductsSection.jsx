@@ -1,17 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Products.css';
 import CardProduct from '../components/CardProduct';
 import Discount from '../components/Discount';
 import { useSearch } from '../context/SearchContext';
-import { useProducts } from '../customHooks/useProducts';
+// import { useProducts } from '../customHooks/useProducts';
 import AddProductModal from '../components/AddProductModal';
 import { useAuth } from '../context/AuthContext';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { 
+  getAllProductsThunk,
+  getAllProducts,
+  getProductsLoading,
+  getProductsError,
+} from '../redux/reducers/productReducer';
 
 const ProductsSection = () => {
   const { searchText } = useSearch();
-  const { products, loading, error, addProduct } = useProducts();
+  // const { products, loading, error, addProduct } = useProducts();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {user} = useAuth();
+
+  const dispatch = useDispatch();
+  const products = useSelector(getAllProducts);
+  const loading = useSelector(getProductsLoading);
+  const error = useSelector(getProductsError);
+
+  useEffect(() => {
+    console.log('useEffect', products);
+    dispatch(getAllProductsThunk());
+  }, []);
   
   const openModal = () => {
     setIsModalOpen(true);
@@ -38,8 +56,8 @@ const ProductsSection = () => {
     {isModalOpen && (
       <AddProductModal 
       closeModal={closeModal} 
-      addProduct={(newProduct) => {
-        addProduct(newProduct);
+      addProduct={(/*newProduct*/) => {
+        /*addProduct(newProduct);*/
         closeModal();
       }}
      />
