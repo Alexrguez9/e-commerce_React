@@ -9,7 +9,7 @@ npm run dev
 A small React project that is working in Vite for faster development.
 
 # LABS
- # LAB 5: Redux - Redux Toolkit
+ ## LAB 5: Redux - Redux Toolkit
  Comentamos todo lo relacionado con el productContext. Vamos a pasar a utilizar estado global con Redux Toolkit.
  No queremos perder funcionalidad en cuanto a gestiones de errores, ni en cuanto a componentes visuales mostrados en tiempo de espera.
  - Creamos Store y Reducers.
