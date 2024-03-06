@@ -39,8 +39,8 @@ const ProductEditModal = ({ product, closeModal }) => {
         dispatch(updateProductThunk(updatedProduct));
         // await updateProduct(product.id, updatedProduct); // with PROVIDER
         console.log('Updated product');
-        closeModal();
         dispatch(getAllProductsThunk());
+        closeModal();
     };
 
     
