@@ -2,41 +2,74 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import './Profile.css';
 import { useLocation, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Profile = () => {
     const { user, login, logout } = useAuth();
-    const [formData, setFormData] = useState({ name: '', email: '', role:'' , password:'', repeatPassword:''});
 
     const navigate = useNavigate();
     const location = useLocation();
 
-    const handleInputsChange = (e) => {
-        const { name, value } = e.target;
-        if (value.includes("@admin")){
-            formData.role = "admin";
-        } else {
-            formData.role = "user";
-        }
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: value,
-            ['role']: formData.role,
-        }));
-    }
+    const {
+        register,
+        handleSubmit,
+        watch,
+        clearErrors,
+        setError,
+        formState: { errors },
+        reset,
+    } = useForm();
 
-    const handleLogin = () => {
-        if (!formData.name || !formData.email) {
+    // TODO: ERRORES DE NAME Y EMAIL
+    
+    const onSubmit = handleSubmit((data) => {
+        console.log('User:', user);
+
+        if (!user) {
+            const updatedData = handleAdmin(data);
+            console.log(updatedData);
+            login(updatedData);
+            reset();
+            navigate(location.state.pathname);
+        } else{
+            logout();
+            if (!data.name || !data.email) {
             alert('Por favor, rellena todos los campos');
             return;
         }
-        if (formData.password == formData.repeatPassword) {
-            alert('Las contraseñas no coinciden');
-            return;
+        }
+    });
+
+    const handlePasswordValidation = () => {
+        console.log(errors);
+        if (errors.password) {
+            clearErrors("password");
         }
 
-        login(formData);
-        setFormData({ name: '', email: '' });
-        navigate(location.state.pathname);
+        const password = watch("password");
+        const repeatPassword = watch("repeatPassword");
+
+        if (password.length < 8) {
+            return setError("password", {
+                message: "La contraseña debe tener al menos 8 caracteres",
+            });
+        }
+
+        if (password === repeatPassword) {
+            clearErrors();
+        }
+    }
+
+    const handleAdmin = (data) => {
+        const email = watch("email");
+        const role = email.includes("@admin") ? "admin" : "user";
+        return {...data, role}
+    }
+
+    const handleLogout = () => {
+        if (user) {
+            logout();
+        }
     }
 
     return (
@@ -44,56 +77,73 @@ const Profile = () => {
             <div id="profile-card">
                 <div className="content">
                     <h1>Profile</h1>
-                    <div className="inputs">
+                    <form onSubmit={onSubmit}>
+                        <div className="inputs">
                         <div className="input-container">
-                            <h2>Nombre: </h2>
-                            <input 
-                                type="text"
-                                name="name"
-                                placeholder="Name"
-                                value={formData.name}
-                                onChange={handleInputsChange}
-                            />
+                            <label>
+                                Name:
+                                <input 
+                                    type="text"
+                                    {...register("name", { 
+                                        required: true,
+                                    })}
+                                />
+                            </label>
                         </div>
                         <div className="input-container">
-                            <h2>Email: </h2>
-                            <input
-                                type="text"
-                                name="email"
-                                placeholder="Email"
-                                value={formData.email}
-                                onChange={handleInputsChange}
-                            />
+                            <label>
+                                Email: 
+                                <input
+                                    type="text"
+                                    {...register("email", {
+                                        required: true,
+                                    })}
+                                />
+                            </label>
                         </div>
                         <div className="input-container">
-                            <h2>Password: </h2>
-                            <input
-                                type="text"
-                                name="password"
-                                placeholder="Password"
-                                value={formData.password}
-                                onChange={handleInputsChange}
-                            />
+                            <label>
+                                Password: 
+                                <input
+                                    type="password"
+                                    {...register("password", { 
+                                        required: true,
+                                        minLength: {
+                                            value: 8,
+                                            message: "La contraseña debe tener al menos 8 caracteres"
+                                        }
+                                    })}
+                                    onBlur={() => handlePasswordValidation()}
+                                />
+                                {errors.password && <span>{errors.password.message}</span>}
+                            </label>
                         </div>
                         <div className="input-container">
-                            <h2>Repeat password: </h2>
-                            <input
-                                type="text"
-                                name="repeatPassword"
-                                placeholder="Repeat password"
-                                value={formData.repeatPassword}
-                                onChange={handleInputsChange}
-                            />
+                            <label>
+                                Repeat password: 
+                                <input
+                                    type="password"
+                                    {...register("repeatPassword", {
+                                        required: "Por favor, repite la contraseña",
+                                        validate: (value) => value === watch("password") || "Las contraseñas no coinciden",
+                                    })}
+                                    onBlur={() => handlePasswordValidation()}
+                                    
+                                />
+                                {errors.repeatPassword && <span>{errors.repeatPassword.message}</span>}
+                            </label>
                         </div>
                     </div>
-                {!user ? <div><button onClick={handleLogin}>Login</button></div> : <div><button onClick={logout}>Cerrar sesión</button></div>}
-                {user && (
-                  <div>
-                    <p>¿Quieres cerrar sesión {user.name}?</p>
-                  </div>
-                )}
+                    {!user ? <div><button>Login</button></div> : <div><button onClick={handleLogout}>Cerrar sesión</button></div>}
+                    {user && (
+                    <div>
+                        <p>¿Quieres cerrar sesión {user.name}?</p>
+                    </div>
+                    )}
+                </form>
                 </div>
             </div>
+
         </main>
     );
 }
