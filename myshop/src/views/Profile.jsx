@@ -19,8 +19,6 @@ const Profile = () => {
         formState: { errors },
         reset,
     } = useForm();
-
-    // TODO: ERRORES DE NAME Y EMAIL
     
     const onSubmit = handleSubmit((data) => {
         console.log('User:', user);
@@ -41,7 +39,6 @@ const Profile = () => {
     });
 
     const handlePasswordValidation = () => {
-        console.log(errors);
         if (errors.password) {
             clearErrors("password");
         }

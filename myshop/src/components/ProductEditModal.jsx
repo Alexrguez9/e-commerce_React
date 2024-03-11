@@ -1,5 +1,5 @@
 import './Modal.css'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdClose } from "react-icons/io";
 // import { useProducts } from '../customHooks/useProducts';
 import { useDispatch } from 'react-redux';
@@ -10,13 +10,6 @@ import {
 import { useForm } from 'react-hook-form';
 
 const ProductEditModal = ({ product, closeModal }) => {
-    const [editedFields, setEditedFields] = useState({
-        title: product.title,
-        price: product.price,
-        description: product.description,
-        image: product.image
-    });
-
     const {
         register,
         handleSubmit,
@@ -34,28 +27,19 @@ const ProductEditModal = ({ product, closeModal }) => {
         }
     });
 
-    reset({
-        title: product.title,
-        price: product.price,
-        description: product.description,
-        image: product.image
-    });
+    useEffect(() => {
+        reset({
+            title: product.title,
+            price: product.price,
+            description: product.description,
+            image: product.image
+        });
+    }, [product, reset]);
 
     // const { updateProduct } = useProducts();
     const dispatch = useDispatch();
-    
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        const newValue = name === 'price' ? parseFloat(value) : value;
-        setEditedFields((prevFields) => ({
-            ...prevFields,
-            [name]: newValue
-        }));
-    };
 
-    const handleSubmitForm = async (data) => {
-
-
+    const onSubmit = handleSubmit((data) => {
         const updatedProduct = {
             ...product,
             ...data
@@ -66,7 +50,7 @@ const ProductEditModal = ({ product, closeModal }) => {
         console.log('Updated product');
         dispatch(getAllProductsThunk());
         closeModal();
-    };
+    });
 
     
     return (
@@ -75,7 +59,7 @@ const ProductEditModal = ({ product, closeModal }) => {
                 <IoMdClose id="close-menu" onClick={closeModal} style={{ color: 'black' }} />
                 <h3 className="modal-admin-title">Modificar Producto</h3>
                 <form
-                    onSubmit={handleSubmitForm}
+                    onSubmit={onSubmit}
                     className="form-modal-container"
                 >
                     <div className="form-field">
@@ -124,8 +108,8 @@ const ProductEditModal = ({ product, closeModal }) => {
                                         message: "La descripción debe tener al menos 3 caracteres"
                                     },
                                     maxLength: {
-                                        value: 100,
-                                        message: "La descripción debe tener menos de 100 caracteres"
+                                        value: 500,
+                                        message: "La descripción debe tener menos de 500 caracteres"
                                     }
                                 })}
                             />
