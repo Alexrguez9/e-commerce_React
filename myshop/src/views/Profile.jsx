@@ -33,7 +33,7 @@ const Profile = () => {
             alert('Las contraseñas no coinciden');
             return;
         }
-        
+
         login(formData);
         setFormData({ name: '', email: '' });
         navigate(location.state.pathname);
@@ -41,48 +41,58 @@ const Profile = () => {
 
     return (
         <main>
-            <div className="content">
-                <h1>Profile</h1>
-                <div className="inputs">
-                    <h2>Nombre: </h2>
-                    <input 
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={formData.name}
-                        onChange={handleInputsChange}
-                    />
-                    <h2>Email: </h2>
-                    <input
-                        type="text"
-                        name="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={handleInputsChange}
-                    />
-                    <h2>Password: </h2>
-                    <input
-                        type="text"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleInputsChange}
-                    />
-                    <h2>Repeat password: </h2>
-                    <input
-                        type="text"
-                        name="repeatPassword"
-                        placeholder="Repeat password"
-                        value={formData.repeatPassword}
-                        onChange={handleInputsChange}
-                    />
-                </div>
+            <div id="profile-card">
+                <div className="content">
+                    <h1>Profile</h1>
+                    <div className="inputs">
+                        <div className="input-container">
+                            <h2>Nombre: </h2>
+                            <input 
+                                type="text"
+                                name="name"
+                                placeholder="Name"
+                                value={formData.name}
+                                onChange={handleInputsChange}
+                            />
+                        </div>
+                        <div className="input-container">
+                            <h2>Email: </h2>
+                            <input
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                                value={formData.email}
+                                onChange={handleInputsChange}
+                            />
+                        </div>
+                        <div className="input-container">
+                            <h2>Password: </h2>
+                            <input
+                                type="text"
+                                name="password"
+                                placeholder="Password"
+                                value={formData.password}
+                                onChange={handleInputsChange}
+                            />
+                        </div>
+                        <div className="input-container">
+                            <h2>Repeat password: </h2>
+                            <input
+                                type="text"
+                                name="repeatPassword"
+                                placeholder="Repeat password"
+                                value={formData.repeatPassword}
+                                onChange={handleInputsChange}
+                            />
+                        </div>
+                    </div>
                 {!user ? <div><button onClick={handleLogin}>Login</button></div> : <div><button onClick={logout}>Cerrar sesión</button></div>}
                 {user && (
                   <div>
                     <p>¿Quieres cerrar sesión {user.name}?</p>
                   </div>
                 )}
+                </div>
             </div>
         </main>
     );
