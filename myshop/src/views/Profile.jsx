@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "../context/AuthContext";
 import './Profile.css';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -72,6 +72,16 @@ const Profile = () => {
         }
     }
 
+    const handleEmailValidation = () => {
+        const email = watch("email");
+
+        if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
+            setError("email", {
+                message: "Por favor, introduce un email válido",
+            });
+        }
+    }
+
     return (
         <main>
             <div id="profile-card">
@@ -85,20 +95,28 @@ const Profile = () => {
                                 <input 
                                     type="text"
                                     {...register("name", { 
-                                        required: true,
+                                        required: "Por favor, introduce tu nombre",
+                                        minLength: {
+                                            value: 3,
+                                            message: "El nombre debe tener al menos 3 caracteres"
+                                        },
+                                        maxLength: 40,
                                     })}
                                 />
+                                {errors.name && <span>{errors.name.message}</span>}
                             </label>
                         </div>
                         <div className="input-container">
                             <label>
                                 Email: 
                                 <input
-                                    type="text"
+                                    type="email"
                                     {...register("email", {
-                                        required: true,
+                                        required: "Por favor, introduce tu email",
                                     })}
+                                    onBlur={() => handleEmailValidation()}
                                 />
+                                {errors.email && <span>{errors.email.message}</span>}
                             </label>
                         </div>
                         <div className="input-container">
