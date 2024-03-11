@@ -5,14 +5,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Profile = () => {
     const { user, login, logout } = useAuth();
-    const [formData, setFormData] = useState({ name: '', email: '', role:'' });
+    const [formData, setFormData] = useState({ name: '', email: '', role:'' , password:'', repeatPassword:''});
 
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleInputsChange = (e) => {
         const { name, value } = e.target;
-        console.log(value);
         if (value.includes("@admin")){
             formData.role = "admin";
         } else {
@@ -30,7 +29,11 @@ const Profile = () => {
             alert('Por favor, rellena todos los campos');
             return;
         }
-
+        if (formData.password == formData.repeatPassword) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+        
         login(formData);
         setFormData({ name: '', email: '' });
         navigate(location.state.pathname);
@@ -55,6 +58,22 @@ const Profile = () => {
                         name="email"
                         placeholder="Email"
                         value={formData.email}
+                        onChange={handleInputsChange}
+                    />
+                    <h2>Password: </h2>
+                    <input
+                        type="text"
+                        name="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={handleInputsChange}
+                    />
+                    <h2>Repeat password: </h2>
+                    <input
+                        type="text"
+                        name="repeatPassword"
+                        placeholder="Repeat password"
+                        value={formData.repeatPassword}
                         onChange={handleInputsChange}
                     />
                 </div>
