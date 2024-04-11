@@ -5,8 +5,10 @@ const AuthContext = createContext();
 
 // Creamos provider
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('userData')) || null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const storedUserData = JSON.parse(localStorage.getItem('userData')) || null;
+  
+  const [user, setUser] = useState(storedUserData);
+  const [isAuthenticated, setIsAuthenticated] = useState(storedUserData !== null);
 
   const login = (userData) => {
     localStorage.setItem('userData', JSON.stringify(userData));

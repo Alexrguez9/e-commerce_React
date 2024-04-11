@@ -13,9 +13,6 @@ const ProductEditModal = ({ product, closeModal }) => {
     const {
         register,
         handleSubmit,
-        watch,
-        clearErrors,
-        setError,
         formState: { errors },
         reset,
     } = useForm({
@@ -47,8 +44,6 @@ const ProductEditModal = ({ product, closeModal }) => {
 
         dispatch(updateProductThunk(updatedProduct));
         // await updateProduct(product.id, updatedProduct); // with PROVIDER
-        console.log('Updated product');
-        dispatch(getAllProductsThunk());
         closeModal();
     });
 

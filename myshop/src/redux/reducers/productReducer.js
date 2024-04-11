@@ -33,9 +33,11 @@ export const addProductThunk = createAsyncThunk(
 
 export const updateProductThunk = createAsyncThunk(
     "products/updateProduct",
-    async (updatedProduct) => {
+    async (updatedProduct, { dispatch }) => {
         try {
-            return await updateProductAPI(updatedProduct);
+            const response = await updateProductAPI(updatedProduct);
+            dispatch(getAllProductsThunk()); // Despachar la acción para obtener todas las tareas actualizadas
+            return response.data;
         } catch (error) {
             throw new Error(error.message);
         }
